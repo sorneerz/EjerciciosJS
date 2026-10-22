@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Taller Introducción a la Ingeniería de Sistemas - Lógica</title>
+    <style>
+        h2 {
+            color: #bd0000;
+        }
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>--
+
+    <h2>Menú de opciones</h2>
+    <hr>
+
+    <button onclick="modulo1()">1. Divisor (Módulo 2)</button><br><br>
+    <button onclick="modulo2()">2. Es primo? (Módulo 3)</button><br><br>
+    <button onclick="modulo3()">3. Divisores primos (Módulo 4)</button><br><br>
+    <button onclick="modulo4()">4. Primeros N Primos (Módulo 5)</button><br><br>
+    <button onclick="modulo5()">5. Aleatorio primo (Módulo 6)</button><br><br>
+    <button onclick="modulo6()">6. 10 Números capicúas (Módulo 7)</button><br><br>
+
+    <script>
+        // FUNCIÓN AUXILIAR PARA COMPROBAR SI UN NÚMERO ES PRIMO
+        function esPrimo(n) {
+            if (n < 2) return false;
+            for (let i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        // Módulo 2: Determinar si el segundo número es divisor del primero
+        function modulo1() {
+            let num1 = parseInt(prompt("Ingrese el primer número:"));
+            let num2 = parseInt(prompt("Ingrese el segundo número (divisor):"));
+            if (isNaN(num1) || isNaN(num2) || num2 === 0) {
+                alert("Por favor, ingrese números válidos y el divisor no puede ser cero.");
+                return;
+            } 
+            let resultado = (num1 % num2 === 0);
+            // Mensaje amigable y descirptivo en lugar de mostrar "Retorna: true/false"
+            if (resultado) {
+                alert("SI, el segundo número (" + num2 + ") SI es un divisor del primero (" + num1 + ").");
+            } else {
+                alert("NO,el segundo número (" + num2 + ") NO es divisor del primero (" + num1 + ")."
+                );
+            }
+        }
+
+        // Módulo 3: Determinar si un número ingresado es primo
+        function modulo2() {
+            let n = parseInt(prompt("Ingrese un número para verificar si es primo:"));
+            if (isNaN(n)) return;
+
+            let resultado = esPrimo(n);
+            alert(n + (resultado ? " Sí es un número primo " : " No es un número primo "));
+        }
+
+        // Módulo 4: Encontrar los divisores primos de un número entero 
+        function modulo3() {
+            let n = parseInt(prompt("Ingrese un número entero positivo:"));
+            if (isNaN(n) || n <= 0) return;
+
+            let divisoresPrimos = [];
+            for (let i = 1; i <= n; i++) {
+                if (n % i === 0 && esPrimo(i)) {
+                    divisoresPrimos.push(i);
+                }
+            }   
+            alert("Los divisores primos de " + n + " son: " + divisoresPrimos.join(", "));
+        }
+
+        // Módulo 5: Imprimir los primeros N números primos
+        function modulo4() {
+            let n = parseInt(prompt("¿Cuántos números primos desea imprimir (N)?:"));
+            if (isNaN(n) || n <= 0) return;
+            
+            let listaPrimos = [];
+            let actual = 2;
+            while (listaPrimos.length < n) {
+                if (esPrimo(actual)) {
+                    listaPrimos.push(actual);
+                }
+                actual++;
+            }
+            alert("Los primeros " + n + " números primos son:\n" + listaPrimos.join(", "));
+        }
+
+        // Módulo 6: Determinar si un número aleatorio es primo
+        function modulo5() {
+            let aleatorio = Math.floor(Math.random() * 100) + 1;
+            let primo = esPrimo(aleatorio);
+
+            alert("Número aleatorio generado: " + aleatorio + "\n¿Es primo? " + primo);
+        }
+
+        // Módulo 7: Generar 10 números capicúas de 3 cifras
+        function modulo6() {
+            let acumulados = [];
+            let intentos = 0;
+
+            while (acumulados.length < 10 && intentos < 100000) {
+                let num = Math.floor(Math.random() * 900) + 100;
+                let strNum = num.toString();
+                let esCapicua = (strNum === strNum.split("").reverse().join(""));
+
+                if (esCapicua) {
+                    acumulados.push(num);
+                }
+                intentos++;
+            }
+
+            alert("Se encontraron 10 números capicúas:\n\n" + acumulados.join(", "));
+        }
+    </script>
+
+</body>
+</html>
